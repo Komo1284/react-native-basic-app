@@ -1,12 +1,30 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { Provider } from 'react-redux';
+import MainScreen from './screens/MainScreen';
+import { store } from './redux/store';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import LoginScreen from './screens/LoginScreen';
+import app from './firebase';
+import Toast from 'react-native-toast-message';
 
 export default function App() {
+
+  const Stack = createNativeStackNavigator();
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
+          <Stack.Screen options={{ headerShown: false }} name="Main" component={MainScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
+    <Toast />
+    </>
   );
 }
 
